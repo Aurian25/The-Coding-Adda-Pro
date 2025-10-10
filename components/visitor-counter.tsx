@@ -1,54 +1,51 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { Eye } from "lucide-react"
+import { useEffect, useState } from "react";
+import { Eye } from "lucide-react";
 
 export function VisitorCounter() {
-  const [visitorCount, setVisitorCount] = useState(0)
-  const [isLoading, setIsLoading] = useState(true)
+  const [visitorCount, setVisitorCount] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const VISITOR_KEY = "codingAddaVisitors"
-    const LAST_VISIT_KEY = "lastVisitTime"
+    const LAST_VISIT_KEY = "codingAdda_last_visit";
+    const now = Date.now();
+    const thirtyMinutes = 30 * 60 * 1000;
+    const lastVisit = localStorage.getItem(LAST_VISIT_KEY);
+    const shouldIncrement = !lastVisit || now - Number.parseInt(lastVisit) > thirtyMinutes;
 
-    // Get current count from localStorage or start from 0
-    const currentCount = localStorage.getItem(VISITOR_KEY)
-    const lastVisit = localStorage.getItem(LAST_VISIT_KEY)
-    const now = Date.now()
-
-    let count = currentCount ? Number.parseInt(currentCount) : 0
-
-    // Only increment if this is a new session (more than 30 minutes since last visit)
-    const thirtyMinutes = 30 * 60 * 1000
-    if (!lastVisit || now - Number.parseInt(lastVisit) > thirtyMinutes) {
-      count += 1
-      localStorage.setItem(VISITOR_KEY, count.toString())
-      localStorage.setItem(LAST_VISIT_KEY, now.toString())
+    async function fetchAndMaybeIncrement() {
+      try {
+        if (shouldIncrement) {
+          // Increment total visitors in the database
+          await fetch("/api/visitors", { method: "POST" });
+          localStorage.setItem(LAST_VISIT_KEY, now.toString());
+        }
+        // Fetch the latest total visitor count
+        const res = await fetch("/api/visitors");
+        const json = await res.json();
+        setVisitorCount(json.count ?? 0);
+      } catch (err) {
+        console.error("Visitor counter error:", err);
+      } finally {
+        setIsLoading(false);
+      }
     }
 
-    setVisitorCount(count)
-    setIsLoading(false)
-
-    // No automatic increments, only real visits count
-  }, [])
-
-  const formatNumber = (num: number) => {
-    return num.toLocaleString()
-  }
+    fetchAndMaybeIncrement();
+  }, []);
 
   return (
     <div className="flex items-center justify-center gap-2 text-sm text-gray-400 mb-4">
       <Eye className="w-4 h-4 text-blue-400" />
-      <span>
-        {isLoading ? (
-          <span className="animate-pulse">Loading...</span>
-        ) : (
-          <>
-            <span className="text-blue-400 font-semibold">{formatNumber(visitorCount)}</span>
-            <span> total visitors</span>
-          </>
-        )}
-      </span>
+      {isLoading ? (
+        <span className="animate-pulse">Loading...</span>
+      ) : (
+        <>
+          <span className="text-blue-400 font-semibold">{visitorCount?.toLocaleString()}</span>
+          <span> total visitors</span>
+        </>
+      )}
     </div>
-  )
+  );
 }
