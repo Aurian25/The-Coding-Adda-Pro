@@ -28,9 +28,18 @@ export default function RootLayout({
 
         {/* Theme color */}
         <meta name="theme-color" content="#000000" />
+
+        {/* Google AdSense Verification */}
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8142753248792124"
+          crossOrigin="anonymous"
+        ></script>
       </head>
-      
-      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
+
+      <body
+        className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}
+      >
         <Suspense fallback={null}>{children}</Suspense>
         <Analytics />
       </body>
