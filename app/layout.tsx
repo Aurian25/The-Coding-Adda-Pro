@@ -7,7 +7,7 @@ import { Suspense } from "react"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "The Coding Adda by AurianWay - Programming Tutorials",
+  title: "The Coding Adda - Programming Tutorials",
   description: "Your ultimate destination for excellent programming tutorials from YouTube and other platforms",
   generator: "v0.app",
 }
