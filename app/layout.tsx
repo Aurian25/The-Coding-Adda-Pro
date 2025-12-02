@@ -9,7 +9,6 @@ import "./globals.css"
 export const metadata: Metadata = {
   title: "The Coding Adda - Programming Tutorials",
   description: "Your ultimate destination for excellent programming tutorials from YouTube and other platforms",
-  generator: "v0.app",
   icons: {
     icon: "/favicon.ico",
     apple: "/apple-touch-icon.png"
