@@ -10,8 +10,8 @@ export const metadata: Metadata = {
   title: "The Coding Adda - Programming Tutorials",
   description: "Your ultimate destination for excellent programming tutorials from YouTube and other platforms",
   icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png"
+    icon: "public/favicon.ico",
+    apple: "public/apple-touch-icon.png"
   }
 }
 
