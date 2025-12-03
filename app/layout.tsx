@@ -8,11 +8,7 @@ import "./globals.css"
 
 export const metadata: Metadata = {
   title: "The Coding Adda - Programming Tutorials",
-  description: "Your ultimate destination for excellent programming tutorials from YouTube and other platforms",
-  icons: {
-    icon: "public/favicon.ico",
-    apple: "public/apple-touch-icon.png"
-  }
+  description: "Your ultimate destination for excellent programming tutorials from YouTube and other platforms"
 }
 
 export default function RootLayout({
@@ -27,7 +23,7 @@ export default function RootLayout({
 
         {/* Icons */}
         <link rel="apple-touch-icon" href="/icons/icon-192.png" />
-        <link rel="icon" href="/icons/icon-192.png" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
 
         {/* Theme color */}
         <meta name="theme-color" content="#000000" />
